@@ -3179,7 +3179,8 @@ function peg$parse(input, options) {
   }
 }
 
-module.exports = {
+const exports = {
   SyntaxError: peg$SyntaxError,
   parse:       peg$parse
 };
+export default exports;

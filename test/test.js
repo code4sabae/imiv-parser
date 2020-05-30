@@ -1,6 +1,46 @@
-const parse = require("../imiv-parser").parse;
-const fs = require("fs");
-const expect = require('chai').expect;
+import { assert } from "https://deno.land/std/testing/asserts.ts";
+import Parser from "../IMIVParser.mjs";
+
+const parse = Parser.parse;
+
+const __dirname = import.meta.url.substring(0, import.meta.url.lastIndexOf('/')).substring("file://".length)
+const describe = (name, func) => func();
+const it = Deno.test;
+
+const expect = test => {
+  const res = {
+    deep: {
+      equal: chk => {
+        assert(test, chk);
+        return res;
+      }
+    },
+    to: {
+      throw: () => {
+        try {
+          assert(false);
+          return;
+        } catch (e) {
+        }
+        assert(true);
+      }
+    },
+    not: {
+      to: {
+        throw: () => {
+          try {
+            assert(true);
+            return;
+          } catch (e) {
+          }
+          assert(false);
+        }
+      }
+    }
+  }
+  return res;
+}
+
 const dir = __dirname + "/testcases/";
 
 describe('imiv-parser', function() {
@@ -357,24 +397,25 @@ describe('imiv-parser', function() {
   });
 
   describe('file-based test cases', function() {
-
-    var files = fs.readdirSync(dir);
+    const filesi = Deno.readDirSync(dir);
+    const files = []
+    for (const f of filesi) { files.push(f) }
     files.filter(function(a) {
-        return a.endsWith(".json");
+        return a.name.endsWith(".json");
       })
       .filter(function(a) {
-        return files.indexOf(a.replace(".json", ".txt")) !== -1;
+        return !files.find(f => f.name === a.name.replace(".json", ".txt"))
       })
       .forEach(function(a) {
-        var json = JSON.parse(fs.readFileSync(dir + a, "UTF-8"));
-        var txt = fs.readFileSync(dir + a.replace(".json", ".txt"), "UTF-8");
-        it(`入力 ${a.replace(".json",".txt")} と出力 ${a} が一致すること`, function() {
+        var json = JSON.parse(new TextDecoder().decode(Deno.readFileSync(dir + a.name, "UTF-8")));
+        var txt = new TextDecoder().decode(Deno.readFileSync(dir + a.name.replace(".json", ".txt"), "UTF-8"));
+        it(`入力 ${a.name.replace(".json",".txt")} と出力 ${a.name} が一致すること`, function() {
           expect(parse(txt)).deep.equal(json);
         });
       });
     it('コア語彙2.4.0の語彙定義をエラーなくパースできること', function() {
       expect(function() {
-        var txt = fs.readFileSync(dir + "core240.imiv.txt", "UTF-8");
+        var txt = new TextDecoder().decode(Deno.readFileSync(dir + "core240.imiv.txt", "UTF-8"));
         try {
           var a = parse(txt);
           return a;

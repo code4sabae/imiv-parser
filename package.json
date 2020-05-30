@@ -2,33 +2,24 @@
   "name": "imiv-parser",
   "version": "1.0.0",
   "description": "IMI Vocabulary Notation parser for JavaScript",
-  "files": [
-    "imiv-parser.js"
-  ],
-  "main": "imiv-parser.js",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "build": "pegjs --format umd --export-var IMIVParser < spec/imiv-parser.pegjs | uglifyjs -m -c > imiv-parser.js",
-    "test": "mocha"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/indigo-lab/imiv-parser.git"
+    "url": "git+https://github.com/code4sabae/imiv-parser.git"
   },
-  "keywords": [
-    "imi",
-    "imiv",
-    "javascript"
-  ],
-  "author": "indigo-lab",
-  "license": "MIT",
+  "author": "Taisuke Fukuno <fukuno@jig.jp> (https://fukuno.jig.jp/)",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/indigo-lab/imiv-parser/issues"
+    "url": "https://github.com/code4sabae/imiv-parser/issues"
   },
-  "homepage": "https://github.com/indigo-lab/imiv-parser#readme",
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "pegjs": "^0.10.0",
-    "uglify-js": "^3.4.9"
+  "homepage": "https://github.com/code4sabae/imiv-parser#readme",
+  "dependencies": {
+    "pegjs": "^0.10.0"
   }
 }
