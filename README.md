@@ -6,6 +6,8 @@ IMI Vocabulary Notation parser for JavaScript
 
 最新のIMI語彙記法の文法に対応して更新していく予定です。
 
+[![deno](https://taisukef.github.com/denolib/denobadge.svg)](https://deno.land/)
+
 # License
 
 imiv-parser is released under the MIT License.
