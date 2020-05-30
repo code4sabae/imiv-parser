@@ -1,45 +1,9 @@
 import { assert } from "https://deno.land/std/testing/asserts.ts";
+import { describe, it, expect, makeDirname } from "https://taisukef.github.io/denolib/nodelikeassert.mjs"
+const __dirname = makeDirname(import.meta.url)
+
 import Parser from "../IMIVParser.mjs";
-
 const parse = Parser.parse;
-
-const __dirname = import.meta.url.substring(0, import.meta.url.lastIndexOf('/')).substring("file://".length)
-const describe = (name, func) => func();
-const it = Deno.test;
-
-const expect = test => {
-  const res = {
-    deep: {
-      equal: chk => {
-        assert(test, chk);
-        return res;
-      }
-    },
-    to: {
-      throw: () => {
-        try {
-          assert(false);
-          return;
-        } catch (e) {
-        }
-        assert(true);
-      }
-    },
-    not: {
-      to: {
-        throw: () => {
-          try {
-            assert(true);
-            return;
-          } catch (e) {
-          }
-          assert(false);
-        }
-      }
-    }
-  }
-  return res;
-}
 
 const dir = __dirname + "/testcases/";
 
